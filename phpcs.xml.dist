@@ -3,5 +3,6 @@
     <rule ref="PSR1"/>
     <rule ref="PSR2"/>
     <file>src</file>
+    <file>test</file>
     <arg name="encoding" value="utf-8"/>
 </ruleset>
