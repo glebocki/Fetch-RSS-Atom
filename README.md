@@ -1,4 +1,4 @@
-# Fetch RSS/Atom to CSV
+# Fetch RSS/Atom
 
 Recruitment task. CLI app fetching Atom/RSS data into a CSV file
 
