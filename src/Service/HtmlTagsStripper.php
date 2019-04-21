@@ -6,7 +6,7 @@ namespace PrzemyslawGlebockiRekrutacjaHRtec\Service;
 
 class HtmlTagsStripper
 {
-    public static function strip($string): string
+    public static function strip(string $string): string
     {
         return strip_tags($string);
     }

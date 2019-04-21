@@ -30,7 +30,7 @@ class CsvExtendedCommand extends Command
         $path = $input->getArgument('PATH');
 
         $fetcher = new RssFetcher();
-        $fetcher->extended($url,$path);
+        $fetcher->extended($url, $path);
 
         $output->writeln("RSS Feed from $url has been written to $path");
     }

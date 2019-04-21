@@ -10,7 +10,7 @@ class DateFormatter
 {
     private $intlDateFormatter;
 
-    public function __construct($locale = 'pl_PL')
+    public function __construct(string $locale = 'pl_PL')
     {
         $this->intlDateFormatter = new IntlDateFormatter(
             $locale,

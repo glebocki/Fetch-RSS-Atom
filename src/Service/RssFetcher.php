@@ -19,7 +19,7 @@ class RssFetcher
      * @param string $url RSS/Atom feed url
      * @param string $path Output csv file
      */
-    public function simple($url, $path)
+    public function simple(string $url, string $path): void
     {
         self::fetch($url, $path);
     }
@@ -31,12 +31,12 @@ class RssFetcher
      * @param string $url RSS/Atom feed url
      * @param string $path Output csv file
      */
-    public function extended($url, $path)
+    public function extended(string $url, string $path): void
     {
         self::fetch($url, $path);
     }
 
-    private function fetch($url, $path, $append = false)
+    private function fetch(string $url, string $path, bool $append = false): void
     {
         $rssFeed = $this->importRssFeed($url);
         $items = $this->getItems($rssFeed);
@@ -61,7 +61,7 @@ class RssFetcher
      * @param $url
      * @return FeedInterface
      */
-    private function importRssFeed($url): FeedInterface
+    private function importRssFeed(string $url): FeedInterface
     {
         try {
             $rssFeed = Reader::import($url);
