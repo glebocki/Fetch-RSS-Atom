@@ -41,7 +41,6 @@ class RssFetcher
      *
      * @param string $url RSS/Atom feed url
      * @param string $path Output csv file
-     * @throws CannotInsertRecord
      */
     public function extended($url, $path)
     {

@@ -26,11 +26,12 @@ class CsvExtendedCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $url = $input->getArgument('URL');
+        $path = $input->getArgument('PATH');
+
         $fetcher = new RssFetcher();
-        $fetcher->extended(
-            $input->getArgument('URL'),
-            $input->getArgument('PATH')
-        );
-        $output->writeln("RSS Feed from " . $input->getArgument('URL') . ' has been written to ' . $input->getArgument('PATH'));
+        $fetcher->extended($url,$path);
+
+        $output->writeln("RSS Feed from $url has been written to $path");
     }
 }
