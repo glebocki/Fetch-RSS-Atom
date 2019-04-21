@@ -18,7 +18,6 @@ class RssFetcher
      *
      * @param string $url RSS/Atom feed url
      * @param string $path Output csv file
-     * @throws CannotInsertRecord
      */
     public function simple($url, $path)
     {
@@ -27,13 +26,18 @@ class RssFetcher
 
         // TODO: adjust path for output file
         $csv = Writer::createFromPath('../' . $path . '.csv', 'w+');
-        $csv->insertOne(['title', 'description', 'link', 'pubDate', 'creator']);
-        $csv->insertAll($items);
+        try {
+            $csv->insertOne($this->getCsvHeader());
+            $csv->insertAll($items);
+        } catch (CannotInsertRecord $e) {
+            echo "Exception caught writing feed to file: {$e->getMessage()}\n";
+            exit;
+        }
     }
 
     /**
      * Fetches RSS/Atom data and saves it in file provided in $path.
-     * Old data in path.csv are appended.
+     * New data is appended at the end of file.
      *
      * @param string $url RSS/Atom feed url
      * @param string $path Output csv file
@@ -41,7 +45,20 @@ class RssFetcher
      */
     public function extended($url, $path)
     {
-        // TODO: implement me!
+        $rssFeed = $this->importRssFeed($url);
+        $items = $this->getItems($rssFeed);
+
+        // TODO: adjust path for output file
+        $csv = Writer::createFromPath('../' . $path . '.csv', 'a+');
+        try {
+            if (empty($csv->getContent() == true)) {
+                $csv->insertOne($this->getCsvHeader());
+            }
+            $csv->insertAll($items);
+        } catch (CannotInsertRecord $e) {
+            echo "Exception caught writing feed to file: {$e->getMessage()}\n";
+            exit;
+        }
     }
 
     /**
@@ -60,6 +77,18 @@ class RssFetcher
     }
 
     /**
+     * Returns field names in CSV file
+     *
+     * @return array
+     */
+    private function getCsvHeader(): array
+    {
+        return ['title', 'description', 'link', 'pubDate', 'creator'];
+    }
+
+    /**
+     * Returns RSS items for saving
+     *
      * @param FeedInterface $rssFeed
      * @return array
      */
