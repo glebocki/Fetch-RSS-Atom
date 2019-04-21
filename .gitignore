@@ -2,3 +2,5 @@
 composer.lock
 /.idea
 *.pdf
+*.csv
+.phpunit.result.cache

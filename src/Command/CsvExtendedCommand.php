@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace PrzemyslawGlebockiRekrutacjaHRtec\Command;
 
+use PrzemyslawGlebockiRekrutacjaHRtec\Service\RssFetcher;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -25,6 +26,11 @@ class CsvExtendedCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        // ...
+        $fetcher = new RssFetcher();
+        $fetcher->extended(
+            $input->getArgument('URL'),
+            $input->getArgument('PATH')
+        );
+        $output->writeln("RSS Feed from " . $input->getArgument('URL') . ' has been written to ' . $input->getArgument('PATH'));
     }
 }
