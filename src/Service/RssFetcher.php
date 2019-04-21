@@ -21,18 +21,7 @@ class RssFetcher
      */
     public function simple($url, $path)
     {
-        $rssFeed = $this->importRssFeed($url);
-        $items = $this->getItems($rssFeed);
-
-        // TODO: adjust path for output file
-        $csv = Writer::createFromPath('../' . $path . '.csv', 'w+');
-        try {
-            $csv->insertOne($this->getCsvHeader());
-            $csv->insertAll($items);
-        } catch (CannotInsertRecord $e) {
-            echo "Exception caught writing feed to file: {$e->getMessage()}\n";
-            exit;
-        }
+        self::fetch($url, $path);
     }
 
     /**
@@ -44,13 +33,21 @@ class RssFetcher
      */
     public function extended($url, $path)
     {
+        self::fetch($url, $path);
+    }
+
+    private function fetch($url, $path, $append = false)
+    {
         $rssFeed = $this->importRssFeed($url);
         $items = $this->getItems($rssFeed);
 
-        // TODO: adjust path for output file
-        $csv = Writer::createFromPath('../' . $path . '.csv', 'a+');
+        if ($append) {
+            $csv = Writer::createFromPath('../' . $path . '.csv', 'a+');
+        } else {
+            $csv = Writer::createFromPath('../' . $path . '.csv', 'w+');
+        }
         try {
-            if (empty($csv->getContent() == true)) {
+            if (empty($csv->getContent())) {
                 $csv->insertOne($this->getCsvHeader());
             }
             $csv->insertAll($items);
