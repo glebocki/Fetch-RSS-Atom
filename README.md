@@ -23,7 +23,13 @@ composer install
 `<PATH>` - Path to CSV file in which we will save RSS feed
 
 ``` sh
-php src/console.php <URL> <PATH>
+php src/console.php csv:simple <URL> <PATH>
+php src/console.php csv:extended <URL> <PATH>
+```
+
+Example:
+``` sh
+php src/console.php csv:simple http://feeds.nationalgeographic.com/ng/News/News_Main simple_export
 ```
 
 
