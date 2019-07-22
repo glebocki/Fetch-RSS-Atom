@@ -25,7 +25,9 @@
         "squizlabs/php_codesniffer": "^3.4"
     },
     "autoload": {
-        "psr-4": {"PrzemyslawGlebockiRekrutacjaHRtec\\": "src/"},
-        "psr-4": {"PrzemyslawGlebockiRekrutacjaHRtec\\Tests\\":  "tests/"}
+        "psr-4": {
+            "PrzemyslawGlebockiRekrutacjaHRtec\\": "src/",
+            "PrzemyslawGlebockiRekrutacjaHRtec\\Tests\\":  "tests/"
+        }
     }
 }
