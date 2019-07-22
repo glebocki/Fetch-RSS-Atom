@@ -5,7 +5,7 @@
         verbose="true">
     <testsuites>
         <testsuite name="default">
-            <directory>test</directory>
+            <directory>tests</directory>
         </testsuite>
     </testsuites>
     <filter>

@@ -12,6 +12,9 @@ use Zend\Feed\Reader\Reader;
 
 class RssFetcher
 {
+    /** @var FeedInterface */
+    private $feed;
+
     /**
      * Fetches RSS/Atom data and saves it in file provided in $path.
      * Old data in path.csv are overwritten.
@@ -33,13 +36,12 @@ class RssFetcher
      */
     public function extended(string $url, string $path): void
     {
-        self::fetch($url, $path);
+        self::fetch($url, $path, true);
     }
 
     private function fetch(string $url, string $path, bool $append = false): void
     {
-        $rssFeed = $this->importRssFeed($url);
-        $items = $this->getItems($rssFeed);
+        $this->feed = $this->importRssFeed($url);
 
         if ($append) {
             $csv = Writer::createFromPath('../' . $path . '.csv', 'a+');
@@ -50,7 +52,7 @@ class RssFetcher
             if (empty($csv->getContent())) {
                 $csv->insertOne($this->getCsvHeader());
             }
-            $csv->insertAll($items);
+            $csv->insertAll($this->getItems());
         } catch (CannotInsertRecord $e) {
             echo "Exception caught writing feed to file: {$e->getMessage()}\n";
             exit;
@@ -85,14 +87,14 @@ class RssFetcher
     /**
      * Returns RSS items for saving
      *
-     * @param FeedInterface $rssFeed
      * @return array
      */
-    private function getItems(FeedInterface $rssFeed): array
+    private function getItems(): array
     {
         $dateFormatter = new DateFormatter();
         $items = [];
-        foreach ($rssFeed as $item) {
+        /** @var FeedInterface $item */
+        foreach ($this->feed as $item) {
             $items[] = [
                 'title' => $item->getTitle(),
                 'description' => HtmlTagsStripper::strip($item->getDescription()),
