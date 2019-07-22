@@ -18,7 +18,8 @@ class CsvExtendedCommand extends Command
     {
         $this
             ->setDescription('Fetches RSS/Atom data from URL and appends it to PATH.csv file.')
-            ->setHelp('Fetches RSS/Atom feed from URL and appends it to PATH.csv file. Data in PATH.csv file is appended')
+            ->setHelp('Fetches RSS/Atom feed from URL and appends it to PATH.csv file. Data in PATH.csv file '
+                . 'is appended')
             ->addArgument('URL', InputArgument::REQUIRED, 'RSS/Atom Feed URL')
             ->addArgument('PATH', InputArgument::REQUIRED, 'Path to CSV file')
         ;
