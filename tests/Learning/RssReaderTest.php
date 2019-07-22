@@ -24,7 +24,7 @@ class RssReaderTest extends TestCase
     /**
      * @test
      */
-    public function ReaderImportFromLocalResource()
+    public function readerImportFromLocalResource()
     {
         $rssFeed = Reader::importFile('./resources/rss-nat-geo.xml');
         self::assertInstanceOf(FeedInterface::class, $rssFeed);
@@ -33,7 +33,7 @@ class RssReaderTest extends TestCase
     /**
      * @test
      */
-    public function ReaderImportFromNotExistingFile()
+    public function readerImportFromNotExistingFile()
     {
         $this->expectException(RuntimeException::class);
         $rssFeed = Reader::importFile('./resource/not-existing-rss.xml');
@@ -43,7 +43,7 @@ class RssReaderTest extends TestCase
      * @test
      * @doesNotPerformAssertions
      */
-    public function ExtractInformationFromFeed()
+    public function extractInformationFromFeed()
     {
         $feed = Reader::importFile('./resources/rss-nat-geo.xml');
         $data = [
